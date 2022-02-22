@@ -38,6 +38,11 @@ fun Greeting(name: String) {
 @Composable
 fun DefaultPreview() {
     ComposeDemoPokedexAppTheme {
-        Greeting("Android")
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            Greeting("Santiago")
+        }
     }
 }
