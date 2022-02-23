@@ -79,5 +79,7 @@ dependencies {
     /* Dagger-Hilt */
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+    /* Splash Screen */
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
 
 }
