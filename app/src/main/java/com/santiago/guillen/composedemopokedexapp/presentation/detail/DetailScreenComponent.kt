@@ -36,7 +36,7 @@ fun HeaderPage() {
                 .width(IntrinsicSize.Max)
                 .padding(start = 12.dp, top = 12.dp)
         ) {
-            TitleH2Ligth("Charmander")
+            TitleH2Ligth("Charizard")
         }
         Row(
             Modifier
@@ -50,9 +50,10 @@ fun HeaderPage() {
         Row(
             Modifier
                 .width(IntrinsicSize.Max)
-                .padding(start = 8.dp)
+                .padding(start = 6.dp)
         ) {
-            ChipOutlined("Posion")
+            ChipOutlined("Flying")
+            ChipOutlined("Fire")
         }
     }
 }

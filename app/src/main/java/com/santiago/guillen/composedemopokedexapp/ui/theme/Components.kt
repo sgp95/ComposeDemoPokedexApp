@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +46,7 @@ fun Caption1Ligth(
             fontFamily = fontsPoppins,
             fontWeight = FontWeight.SemiBold,
             fontSize = 20.sp,
-            color = Color(android.graphics.Color.WHITE)
+            color = Color.White
         ),
     )
 }
@@ -61,11 +60,11 @@ fun ChipOutlined(
     onSelectionChanged: (String) -> Unit = {},
 ) {
     Surface(
-        modifier = Modifier.padding(start = 4.dp),
+        modifier = Modifier.padding(start = 6.dp),
         elevation = 0.dp,
         shape = RoundedCornerShape(16.dp),
         border= BorderStroke(1.dp, Color.White),
-        color = if (isSelected) Color.Black.copy(alpha = 0.4f) else Color.White.copy(alpha = 0f)
+        color = if (isSelected) Color.Black.copy(alpha = 0.4f) else Color.White.copy(alpha = 0.15f)
     ) {
         Row(modifier = Modifier
             .toggleable(
@@ -77,9 +76,14 @@ fun ChipOutlined(
         ) {
             Text(
                 text = name,
-                style = MaterialTheme.typography.body2,
+                style = TextStyle(
+                    fontFamily = fontsLato,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = Color(android.graphics.Color.WHITE)
+                ),
                 color = Color.White,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(vertical = 8.dp, horizontal = 20.dp)
             )
         }
     }
