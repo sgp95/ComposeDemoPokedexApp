@@ -35,7 +35,7 @@ fun TitleH2Ligth(
 }
 
 @Composable
-fun Caption1Ligth(
+fun SubtitleSmallLigth(
     text: String,
     modifier: Modifier = Modifier,
 ) {
@@ -45,9 +45,22 @@ fun Caption1Ligth(
         style = TextStyle(
             fontFamily = fontsPoppins,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 20.sp,
+            fontSize = 14.sp,
             color = Color.White
         ),
+    )
+}
+
+@Composable
+fun CaptionDark(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = text,
+        color = Color.DarkGray,
+        fontSize = 12.sp,
+        modifier = modifier
     )
 }
 

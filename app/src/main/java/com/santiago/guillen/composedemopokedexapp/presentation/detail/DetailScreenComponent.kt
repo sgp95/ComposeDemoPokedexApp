@@ -1,17 +1,24 @@
 package com.santiago.guillen.composedemopokedexapp.presentation.detail
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.santiago.guillen.composedemopokedexapp.ui.theme.Caption1Ligth
-import com.santiago.guillen.composedemopokedexapp.ui.theme.ChipOutlined
-import com.santiago.guillen.composedemopokedexapp.ui.theme.ComposeDemoPokedexAppTheme
-import com.santiago.guillen.composedemopokedexapp.ui.theme.TitleH2Ligth
+import com.santiago.guillen.composedemopokedexapp.R
+import com.santiago.guillen.composedemopokedexapp.ui.theme.*
 
 @Preview(showBackground = true)
 @Composable
@@ -21,13 +28,12 @@ fun ViewPreview() {
             modifier = Modifier.fillMaxSize(),
             color = Color(0xFFFB6C6C)
         ) {
-            HeaderPage()
+            PokemonDetailLayout()
         }
     }
 }
-
 @Composable
-fun HeaderPage() {
+fun PokemonDetailLayout() {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -40,12 +46,12 @@ fun HeaderPage() {
         }
         Row(
             Modifier
+                .align(Alignment.End)
                 .width(IntrinsicSize.Max)
                 .height(IntrinsicSize.Min)
-                .align(Alignment.End)
                 .padding(end = 12.dp)
         ) {
-            Caption1Ligth("#004")
+            SubtitleSmallLigth("#004")
         }
         Row(
             Modifier
@@ -54,8 +60,82 @@ fun HeaderPage() {
         ) {
             ChipOutlined("Flying")
             ChipOutlined("Fire")
+            ChipOutlined("Flying")
+
         }
+        Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
+        PokemonImage()
+        Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
+        Spacer(
+            modifier = Modifier
+                .clip(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                .background(Color.White)
+                .fillMaxWidth()
+                .height(48.dp)
+        )
+        TabsLayout()
+
+
     }
 }
+@Composable
+fun PokemonImage() {
+    Box {
+        Image(
+            painter = painterResource(R.drawable.pokeball),"",
+            colorFilter = ColorFilter.tint(color = Color.White),
+            modifier = Modifier
+                .alpha(0.5f)
+        )
+        Image(
+            painter = painterResource(R.drawable.ic_pk_charizard),"",
+            modifier = Modifier
+                .padding(top = 24.dp),
+        )
+    }
+}
+
+@Composable
+fun TabsLayout(){
+    val tabsNames = listOf(
+        "Stats",
+        "Base Stats",
+        "Evolution",
+        "Moves"
+    )
+
+    val tabIndex = 0
+
+    // TAB
+    TabRow(
+        selectedTabIndex = tabIndex,
+        modifier = Modifier
+            .background(color = Color.White)
+    ) {
+        tabsNames.forEachIndexed { index, text ->
+            TabLight(tabIndex, index, text) {
+
+            }
+        }
+    }
+
+}
+
+@Composable
+private fun TabLight(tabIndex: Int, index: Int, text: String, onClick: () -> Unit) {
+    Tab(
+        selected = tabIndex == index,
+        modifier = Modifier
+            .background(Color.White),
+        onClick = onClick,
+        text = {
+            CaptionDark(
+                modifier = Modifier
+                    .background(Color.White),
+                text = text
+            )
+        })
+}
+
 
 
