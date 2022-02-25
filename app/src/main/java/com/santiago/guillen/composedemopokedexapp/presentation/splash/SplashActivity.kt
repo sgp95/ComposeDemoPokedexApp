@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.santiago.guillen.composedemopokedexapp.presentation.MainActivity
+import com.santiago.guillen.composedemopokedexapp.presentation.home.HomeActivity
 
 
 class SplashActivity: ComponentActivity() {
@@ -15,7 +15,7 @@ class SplashActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SplashScreen {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, HomeActivity::class.java))
             }
         }
     }

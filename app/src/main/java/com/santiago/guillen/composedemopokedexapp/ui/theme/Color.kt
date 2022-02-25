@@ -29,3 +29,26 @@ val IceType = Color(0xFF98D8D8)
 val DragonType = Color(0xFF7038F8)
 val DarkType = Color(0xFF705848)
 val FairyType = Color(0xFFEE99AC)
+
+val PokeballInCard = Color(0x33FAFAFA)
+
+fun colorByType(type: String) = when(type) {
+    "fighting" -> FightingType
+    "flying" -> FlyingType
+    "poison" -> PoisonType
+    "ground" -> GroundType
+    "rock" -> RockType
+    "bug" -> BugType
+    "ghost" -> GhostType
+    "steel" -> SteelType
+    "fire" -> FireType
+    "water" -> WaterType
+    "grass" -> GrassType
+    "electric" -> ElectricType
+    "psychic" -> PsychicType
+    "ice" -> IceType
+    "dragon" -> DragonType
+    "dark" -> DarkType
+    "fairy" -> FairyType
+    else -> NormalType
+}
