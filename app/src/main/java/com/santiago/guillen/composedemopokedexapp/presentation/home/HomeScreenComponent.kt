@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,9 +48,8 @@ fun PokedexEntryCard(pokemon: Pokemon) {
         shape = RoundedCornerShape(15.dp),
         elevation = 5.dp,
         backgroundColor = colorByType(pokemon.types.first().name!!)) {
-        Box(contentAlignment = Alignment.BottomEnd,
-            modifier = Modifier.height(30.dp).width(30.dp)) {
-            Image(
+        Box(modifier = Modifier.fillMaxSize()) {
+            Image(modifier = Modifier.height(80.dp).width(80.dp).align(Alignment.BottomEnd),
                 painter = painterResource(id = R.drawable.pokeball),
                 colorFilter = ColorFilter.tint(PokeballInCard),
                 contentDescription = "splash_icon"
@@ -57,14 +57,16 @@ fun PokedexEntryCard(pokemon: Pokemon) {
         }
         Row(modifier = Modifier.fillMaxSize()
             .padding(horizontal = 5.dp, vertical = 10.dp)) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(text = pokemon.name!!,
+            Column(modifier = Modifier.weight(1f)
+                .padding(start = 5.dp)) {
+                Text(modifier = Modifier.padding(bottom = 5.dp),
+                    text = pokemon.name!!,
                     color = TextOnPrimary,
                     textAlign = TextAlign.Start,
                     fontSize = 15.sp
                 )
-                ShipText(value = pokemon.types[0].name!!)
-                if(pokemon.types.size > 1) ShipText(value = pokemon.types[1].name!!)
+                ShipText(value = pokemon.types[0].name!!.capitalize())
+                if(pokemon.types.size > 1) ShipText(value = pokemon.types[1].name!!.capitalize())
             }
             Box(contentAlignment = Alignment.BottomEnd,
                 modifier = Modifier.weight(1f)) {
@@ -83,11 +85,11 @@ fun ShipText(value: String) {
         modifier = Modifier
             .clip(RoundedCornerShape(20.dp))
             .background(PokeballInCard)
-            .padding(horizontal = 20.dp, vertical = 10.dp)
+            .padding(horizontal = 10.dp, vertical = 6.dp)
     ) {
         Text(text = value,
             color = TextOnPrimary,
-            fontSize = 10.sp
+            fontSize = 12.sp
         )
     }
 }

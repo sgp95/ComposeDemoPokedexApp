@@ -12,7 +12,7 @@ import okhttp3.internal.wait
 import javax.inject.Inject
 
 class GetPokedexEntriesUseCase @Inject constructor(private val repository: PokedexRepository) {
-    suspend fun execute(limit: Int = 10, offset: Int)  =
+    suspend fun execute(limit: Int = 20, offset: Int)  =
         coroutineScope {
             val pokemonList = arrayListOf<Pokemon>()
             Log.d("rastroUseCase", "execute")

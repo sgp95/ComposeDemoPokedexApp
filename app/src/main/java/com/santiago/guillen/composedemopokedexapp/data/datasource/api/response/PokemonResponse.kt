@@ -9,7 +9,6 @@ data class PokemonResponse(
     @SerializedName("forms") var forms: ArrayList<Forms> = arrayListOf(),
     @SerializedName("game_indices") var gameIndices: ArrayList<GameIndices> = arrayListOf(),
     @SerializedName("height") var height: Int? = null,
-    @SerializedName("held_items") var heldItems: ArrayList<String> = arrayListOf(),
     @SerializedName("id") var id: Int? = null,
     @SerializedName("is_default") var isDefault: Boolean? = null,
     @SerializedName("location_area_encounters") var locationAreaEncounters: String? = null,
