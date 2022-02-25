@@ -60,38 +60,41 @@ fun PokemonDetailLayout() {
         ) {
             ChipOutlined("Flying")
             ChipOutlined("Fire")
-            ChipOutlined("Flying")
 
         }
-        Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(12.dp))
         PokemonImage()
-        Spacer(modifier = Modifier.fillMaxWidth().height(12.dp))
-        Spacer(
-            modifier = Modifier
-                .clip(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-                .background(Color.White)
-                .fillMaxWidth()
-                .height(48.dp)
-        )
         TabsLayout()
-
-
     }
 }
 @Composable
 fun PokemonImage() {
     Box {
-        Image(
-            painter = painterResource(R.drawable.pokeball),"",
-            colorFilter = ColorFilter.tint(color = Color.White),
+        Spacer(
             modifier = Modifier
-                .alpha(0.5f)
+                .align(alignment = Alignment.BottomCenter)
+                .clip(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                .background(Color.White)
+                .fillMaxWidth()
+                .height(48.dp)
         )
-        Image(
-            painter = painterResource(R.drawable.ic_pk_charizard),"",
-            modifier = Modifier
-                .padding(top = 24.dp),
-        )
+        Box(Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+            Box(Modifier.align(alignment = Alignment.BottomEnd)) {
+                Image(
+                    painter = painterResource(R.drawable.pokeball),"",
+                    colorFilter = ColorFilter.tint(color = Color.White),
+                    modifier = Modifier.alpha(0.5f)
+                )
+            }
+            Box(Modifier.align(alignment = Alignment.BottomCenter)) {
+                Image(
+                    painter = painterResource(R.drawable.ic_pk_charizard),"",
+                    modifier = Modifier.padding(top = 24.dp),
+                )
+            }
+        }
     }
 }
 
