@@ -1,30 +1,23 @@
 package com.santiago.guillen.composedemopokedexapp.domain
 
-import android.util.Log
-import androidx.compose.ui.text.capitalize
 import com.santiago.guillen.composedemopokedexapp.data.datasource.api.response.PokemonResponse
 import com.santiago.guillen.composedemopokedexapp.data.datasource.api.response.PokemonSpecieResponse
 import com.santiago.guillen.composedemopokedexapp.data.repository.PokedexRepository
 import com.santiago.guillen.composedemopokedexapp.domain.model.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import okhttp3.internal.wait
 import javax.inject.Inject
 
 class GetPokedexEntriesUseCase @Inject constructor(private val repository: PokedexRepository) {
     suspend fun execute(limit: Int = 20, offset: Int)  =
         coroutineScope {
             val pokemonList = arrayListOf<Pokemon>()
-            Log.d("rastroUseCase", "execute")
             val pokemonEntries = async { repository.getPokedexEntries(limit, offset) }
-            Log.d("rastroUseCase", "pokemonEntries count: ${pokemonEntries.await().results.size}")
             pokemonEntries.await().results.forEach { entry ->
                 val id = entry.url.split("/")[6].toInt()
-                Log.d("rastroUseCase", "pokemon request id: $id")
                 val pokemonData = async { repository.getPokemon(id) }
                 val pokemonSpecieData = async { repository.getPokemonSpecie(id) }
                 pokemonList.add(mapResponse(pokemonData.await(), pokemonSpecieData.await()))
-                Log.d("rastroUseCase", "pokemonList count: ${pokemonList.size}")
             }
             pokemonList
         }

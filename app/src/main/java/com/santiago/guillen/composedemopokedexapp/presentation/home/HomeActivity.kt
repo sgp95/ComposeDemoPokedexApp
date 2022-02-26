@@ -1,6 +1,7 @@
 package com.santiago.guillen.composedemopokedexapp.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -18,46 +19,25 @@ class HomeActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         viewModel.getEntries()
         setContent {
-            HomeScreen()
+            HomeScreen() { onPokemonClicked(it) }
         }
 
         viewModel.pokedexEntries.observe(this) {
             setContent {
-                HomeScreen(it)
+                HomeScreen(it) { onPokemonClicked(it) }
             }
         }
+
+        viewModel.pokemon.observe(this) {
+        }
+    }
+
+    private fun onPokemonClicked(pokemon: Pokemon) {
+        viewModel.getPokemon(pokemon.id!!)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    HomeScreen(arrayListOf(
-        Pokemon(
-            id = 1,
-            name = "bulbasaur",
-            imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-            types = arrayListOf(
-                Type(name = "grass", url = ""),
-                Type(name = "poison", url = "")
-            )
-        ),
-        Pokemon(
-            id = 6,
-            name = "charizard",
-            imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
-            types = arrayListOf(
-                Type(name = "fire", url = ""),
-                Type(name = "flying", url = "")
-            )
-        ),
-        Pokemon(
-            id = 10,
-            name = "caterpie",
-            imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png",
-            types = arrayListOf(
-                Type(name = "bug", url = "")
-            )
-        )
-    ))
 }

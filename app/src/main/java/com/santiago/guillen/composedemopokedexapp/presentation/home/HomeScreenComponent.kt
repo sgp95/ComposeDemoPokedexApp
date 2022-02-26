@@ -1,6 +1,5 @@
 package com.santiago.guillen.composedemopokedexapp.presentation.home
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,33 +29,42 @@ import com.santiago.guillen.composedemopokedexapp.ui.theme.*
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun HomeScreen(entries: List<Pokemon> = listOf()) {
+fun HomeScreen(entries: List<Pokemon> = listOf(), onPokemonClicked: (pokemon: Pokemon) -> Unit) {
     ComposeDemoPokedexAppTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            GridList(entries)
+            if(entries.isNullOrEmpty()) {
+                ProgressBar(true)
+            } else {
+                GridList(entries, onPokemonClicked)
+            }
         }
     }
 }
 
 @Composable
-fun PokedexEntryCard(pokemon: Pokemon) {
+fun PokedexEntryCard(pokemon: Pokemon, onPokemonClicked: (pokemon: Pokemon) -> Unit) {
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 5.dp, vertical = 10.dp)
-        .clickable { Log.d("rastro", "Click card") },
+        .clickable { onPokemonClicked(pokemon) },
         shape = RoundedCornerShape(15.dp),
         elevation = 5.dp,
         backgroundColor = colorByType(pokemon.types.first().name!!)) {
         Box(modifier = Modifier.fillMaxSize()) {
-            Image(modifier = Modifier.height(80.dp).width(80.dp).align(Alignment.BottomEnd),
+            Image(modifier = Modifier
+                .height(80.dp)
+                .width(80.dp)
+                .align(Alignment.BottomEnd),
                 painter = painterResource(id = R.drawable.pokeball),
                 colorFilter = ColorFilter.tint(PokeballInCard),
                 contentDescription = "splash_icon"
             )
         }
-        Row(modifier = Modifier.fillMaxSize()
+        Row(modifier = Modifier
+            .fillMaxSize()
             .padding(horizontal = 5.dp, vertical = 10.dp)) {
-            Column(modifier = Modifier.weight(1f)
+            Column(modifier = Modifier
+                .weight(1f)
                 .padding(start = 5.dp)) {
                 Text(modifier = Modifier.padding(bottom = 5.dp),
                     text = pokemon.name!!,
@@ -96,7 +103,7 @@ fun ShipText(value: String) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GridList(pokemons: List<Pokemon>) {
+fun GridList(pokemons: List<Pokemon>, onPokemonClicked: (pokemon: Pokemon) -> Unit) {
     val entries = remember { mutableStateListOf<Pokemon>() }
     entries.addAll(pokemons)
 //    val list = (1..10).map { it.toString() }
@@ -105,7 +112,7 @@ fun GridList(pokemons: List<Pokemon>) {
         contentPadding = PaddingValues(10.dp, 4.dp),
         content = {
             items(entries.size) { index ->
-                PokedexEntryCard(pokemon = entries[index])
+                PokedexEntryCard(pokemon = entries[index], onPokemonClicked)
             }
         })
 }
