@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -48,6 +49,61 @@ fun SubtitleSmallLigth(
             fontSize = 14.sp,
             color = Color.White
         ),
+    )
+}
+
+@Composable
+fun SubtitleMediumDark(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        style = TextStyle(
+            fontFamily = fontsPoppins,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 16.sp,
+            color = Color.DarkGray
+        ),
+    )
+}
+
+@Composable
+fun TextSmallLigthGray(
+    text: String,
+    modifier: Modifier = Modifier,
+    textAlign: TextAlign = TextAlign.Start,
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        style = TextStyle(
+            fontFamily = fontsPoppins,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            color = Color.LightGray
+        ),
+        textAlign = textAlign
+    )
+}
+
+@Composable
+fun TextSmallDarkGray(
+    text: String,
+    modifier: Modifier = Modifier,
+    textAlign: TextAlign = TextAlign.Start,
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        style = TextStyle(
+            fontFamily = fontsPoppins,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp,
+            color = Color.DarkGray
+        ),
+        textAlign = textAlign
     )
 }
 
