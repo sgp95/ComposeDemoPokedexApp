@@ -18,7 +18,6 @@ import com.santiago.guillen.composedemopokedexapp.ui.theme.TextSmallLigthGray
 
 @Composable
 fun TabAboutLayout() {
-    val verticalSpace = 8.dp
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -27,87 +26,35 @@ fun TabAboutLayout() {
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top,
     ) {
-        Row {
-            TextSmallLigthGray(
-                "Species",
-                Modifier.weight(1f),
-                TextAlign.Justify
-            )
-            TextSmallDarkGray(
-                "Seed",
-                Modifier.weight(2f),
-                TextAlign.Justify
-            )
-        }
-        Spacer(Modifier.height(verticalSpace))
-        Row {
-            TextSmallLigthGray(
-                "Height",
-                Modifier.weight(1f),
-                TextAlign.Justify
-            )
-            TextSmallDarkGray(
-                "2'3.6'' (0.70 cm)",
-                Modifier.weight(2f),
-                TextAlign.Justify
-            )
-        }
-        Spacer(Modifier.height(verticalSpace))
-        Row {
-            TextSmallLigthGray(
-                "Weight",
-                Modifier.weight(1f),
-                TextAlign.Justify
-            )
-            TextSmallDarkGray(
-                "15.2 lbs (6.9 kg)",
-                Modifier.weight(2f),
-                TextAlign.Justify
-            )
-        }
-        Spacer(Modifier.height(verticalSpace))
-        Row {
-            TextSmallLigthGray(
-                "Abilities",
-                Modifier.weight(1f),
-                TextAlign.Justify
-            )
-            TextSmallDarkGray(
-                "Overgrow, Chiorophyl",
-                Modifier.weight(2f),
-                TextAlign.Justify
-            )
-        }
+        RowAboutInformation("Species", "Seed")
+        RowAboutInformation("Height", "2'3.6'' (0.70 cm)")
+        RowAboutInformation("Weight", "15.2 lbs (6.9 kg)")
+        RowAboutInformation("Abilities", "Overgrow, Chiorophyl")
         SubtitleMediumDark("Breeding", Modifier.padding(top = 12.dp))
-        Spacer(Modifier.height(verticalSpace))
+        Spacer(Modifier.height(8.dp))
         GenderRow()
-        Spacer(Modifier.height(verticalSpace))
-        Row {
-            TextSmallLigthGray(
-                "Egg Groups",
-                Modifier.weight(1f),
-                TextAlign.Justify
-            )
-            TextSmallDarkGray(
-                "Monster",
-                Modifier.weight(2f),
-                TextAlign.Justify
-            )
-        }
-        Spacer(Modifier.height(verticalSpace))
-        Row {
-            TextSmallLigthGray(
-                "Egg Cycle",
-                Modifier.weight(1f),
-                TextAlign.Justify
-            )
-            TextSmallDarkGray(
-                "Grass",
-                Modifier.weight(2f),
-                TextAlign.Justify
-            )
-        }
+        Spacer(Modifier.height(8.dp))
+        RowAboutInformation("Egg Groups", "Monster")
+        RowAboutInformation("Egg Cycle", "Grass")
     }
+}
+
+@Composable
+fun RowAboutInformation(title: String, description: String) {
+    val verticalSpace = 8.dp
+    Row {
+        TextSmallLigthGray(
+            title,
+            Modifier.weight(1f),
+            TextAlign.Justify
+        )
+        TextSmallDarkGray(
+            description,
+            Modifier.weight(2f),
+            TextAlign.Justify
+        )
+    }
+    Spacer(Modifier.height(verticalSpace))
 }
 
 @Composable
