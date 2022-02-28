@@ -32,10 +32,15 @@ import com.skydoves.landscapist.glide.GlideImage
 fun HomeScreen(entries: List<Pokemon> = listOf(), onPokemonClicked: (pokemon: Pokemon) -> Unit) {
     ComposeDemoPokedexAppTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            if(entries.isNullOrEmpty()) {
-                ProgressBar(true)
-            } else {
-                GridList(entries, onPokemonClicked)
+            Column(
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                TitleH2Dark("Pokedex", modifier = Modifier.padding(start = 10.dp, top = 4.dp))
+                if(entries.isNullOrEmpty()) {
+                    ProgressBar(true)
+                } else {
+                    GridList(entries, onPokemonClicked)
+                }
             }
         }
     }
@@ -57,7 +62,7 @@ fun PokedexEntryCard(pokemon: Pokemon, onPokemonClicked: (pokemon: Pokemon) -> U
                 .align(Alignment.BottomEnd),
                 painter = painterResource(id = R.drawable.pokeball),
                 colorFilter = ColorFilter.tint(PokeballInCard),
-                contentDescription = "splash_icon"
+                contentDescription = null
             )
         }
         Row(modifier = Modifier
@@ -66,14 +71,9 @@ fun PokedexEntryCard(pokemon: Pokemon, onPokemonClicked: (pokemon: Pokemon) -> U
             Column(modifier = Modifier
                 .weight(1f)
                 .padding(start = 5.dp)) {
-                Text(modifier = Modifier.padding(bottom = 5.dp),
-                    text = pokemon.name!!,
-                    color = TextOnPrimary,
-                    textAlign = TextAlign.Start,
-                    fontSize = 15.sp
-                )
-                ShipText(value = pokemon.types[0].name!!.capitalize())
-                if(pokemon.types.size > 1) ShipText(value = pokemon.types[1].name!!.capitalize())
+                SubtitleMediumLight(text = pokemon.name!!, modifier = Modifier.padding(bottom = 5.dp), color = TextOnPrimary)
+                ChipOutlined(pokemon.types[0].name!!.capitalize(), fontSize = 10.sp)
+                if(pokemon.types.size > 1) ChipOutlined(pokemon.types[1].name!!.capitalize(), fontSize = 10.sp)
             }
             Box(contentAlignment = Alignment.BottomEnd,
                 modifier = Modifier.weight(1f)) {
@@ -83,21 +83,6 @@ fun PokedexEntryCard(pokemon: Pokemon, onPokemonClicked: (pokemon: Pokemon) -> U
                 }
             }
         }
-    }
-}
-
-@Composable
-fun ShipText(value: String) {
-    Box(contentAlignment = Alignment.BottomEnd,
-        modifier = Modifier
-            .clip(RoundedCornerShape(20.dp))
-            .background(PokeballInCard)
-            .padding(horizontal = 10.dp, vertical = 6.dp)
-    ) {
-        Text(text = value,
-            color = TextOnPrimary,
-            fontSize = 12.sp
-        )
     }
 }
 

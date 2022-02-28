@@ -15,8 +15,13 @@ import com.santiago.guillen.composedemopokedexapp.ui.theme.ComposeDemoPokedexApp
 
 @ExperimentalPagerApi
 class DetailActivity: ComponentActivity() {
+    companion object {
+        const val EXTRA_POKEMON_ID = "pokemonId"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val pokemonId = intent.getIntExtra(EXTRA_POKEMON_ID, 0)
         setContent {
             ComposeDemoPokedexAppTheme {
                 Surface(

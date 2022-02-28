@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -39,6 +40,23 @@ fun TitleH2Ligth(
             fontWeight = FontWeight.ExtraBold,
             fontSize = 42.sp,
             color = Color(android.graphics.Color.WHITE)
+        ),
+    )
+}
+
+@Composable
+fun TitleH2Dark(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        style = TextStyle(
+            fontFamily = fontsLato,
+            fontWeight = FontWeight.ExtraBold,
+            fontSize = 42.sp,
+            color = Color.Black
         ),
     )
 }
@@ -73,6 +91,24 @@ fun SubtitleMediumDark(
             fontWeight = FontWeight.SemiBold,
             fontSize = 16.sp,
             color = Color.DarkGray
+        ),
+    )
+}
+
+@Composable
+fun SubtitleMediumLight(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = Color.White
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        style = TextStyle(
+            fontFamily = fontsPoppins,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 16.sp,
+            color = color
         ),
     )
 }
@@ -135,6 +171,7 @@ fun ChipOutlined(
     name: String = "Chip",
     isSelected: Boolean = false,
     onSelectionChanged: (String) -> Unit = {},
+    fontSize: TextUnit = 14.sp,
 ) {
     Surface(
         modifier = Modifier.padding(start = 6.dp),
@@ -156,7 +193,7 @@ fun ChipOutlined(
                 style = TextStyle(
                     fontFamily = fontsLato,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
+                    fontSize = fontSize,
                     color = Color(android.graphics.Color.WHITE)
                 ),
                 color = Color.White,
@@ -166,6 +203,9 @@ fun ChipOutlined(
     }
 }
 
+/**
+ * Loader
+ */
 @Composable
 fun ProgressBar(isLoading: Boolean = false) {
     ComposeDemoPokedexAppTheme {
