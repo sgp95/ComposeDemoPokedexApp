@@ -13,12 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 
 /**
  * This file will contain all the components/widgets shared between the screens.
@@ -126,7 +125,7 @@ fun TextSmallLigthGray(
             fontFamily = fontsPoppins,
             fontWeight = FontWeight.SemiBold,
             fontSize = 14.sp,
-            color = Color.LightGray
+            color = Color(0XFF7A7879)
         ),
         textAlign = textAlign
     )
@@ -137,13 +136,14 @@ fun TextSmallDarkGray(
     text: String,
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.Start,
+    fontWeight: FontWeight = FontWeight.SemiBold,
 ) {
     Text(
         text = text,
         modifier = modifier,
         style = TextStyle(
             fontFamily = fontsPoppins,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = fontWeight,
             fontSize = 14.sp,
             color = Color.DarkGray
         ),
@@ -172,13 +172,14 @@ fun ChipOutlined(
     isSelected: Boolean = false,
     onSelectionChanged: (String) -> Unit = {},
     fontSize: TextUnit = 14.sp,
+    color: Color = Color.White.copy(alpha = 0.15f)
 ) {
     Surface(
         modifier = Modifier.padding(start = 6.dp),
         elevation = 0.dp,
         shape = RoundedCornerShape(16.dp),
         border= BorderStroke(1.dp, Color.White),
-        color = if (isSelected) Color.Black.copy(alpha = 0.4f) else Color.White.copy(alpha = 0.15f)
+        color = if (isSelected) Color.Black.copy(alpha = 0.4f) else color
     ) {
         Row(modifier = Modifier
             .toggleable(
@@ -221,6 +222,44 @@ fun ProgressBar(isLoading: Boolean = false) {
                 }
             else
                 Unit
+        }
+    }
+}
+
+@Composable
+fun ChipVerticalGrid(
+    modifier: Modifier = Modifier,
+    spacing: Dp,
+    content: @Composable () -> Unit
+) {
+    Layout(
+        content = content,
+        modifier = modifier
+    ) { measurables, constraints ->
+        var currentRow = 0
+        var currentOrigin = IntOffset.Zero
+        val spacingValue = spacing.toPx().toInt()
+        val placeables = measurables.map { measurable ->
+            val placeable = measurable.measure(constraints)
+
+            if (currentOrigin.x > 0f && currentOrigin.x + placeable.width > constraints.maxWidth) {
+                currentRow += 1
+                currentOrigin = currentOrigin.copy(x = 0, y = currentOrigin.y + placeable.height + spacingValue)
+            }
+
+            placeable to currentOrigin.also {
+                currentOrigin = it.copy(x = it.x + placeable.width + spacingValue)
+            }
+        }
+
+        layout(
+            width = constraints.maxWidth,
+            height = placeables.lastOrNull()?.run { first.height + second.y } ?: 0
+        ) {
+            placeables.forEach {
+                val (placeable, origin) = it
+                placeable.place(origin.x, origin.y)
+            }
         }
     }
 }
