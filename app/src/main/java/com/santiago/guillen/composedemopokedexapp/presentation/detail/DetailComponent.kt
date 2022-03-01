@@ -1,8 +1,12 @@
 package com.santiago.guillen.composedemopokedexapp.presentation.detail
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
@@ -16,13 +20,16 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
 import com.santiago.guillen.composedemopokedexapp.R
+import com.santiago.guillen.composedemopokedexapp.domain.model.Pokemon
 import com.santiago.guillen.composedemopokedexapp.ui.theme.*
 import kotlinx.coroutines.launch
+import com.skydoves.landscapist.glide.GlideImage
 
 @ExperimentalPagerApi
 @Preview(showBackground = true)
@@ -33,54 +40,70 @@ fun ViewPreview() {
             modifier = Modifier.fillMaxSize(),
             color = Color(0xFFFB6C6C)
         ) {
-            PokemonDetailLayout()
+
         }
     }
 }
+@ExperimentalFoundationApi
 @ExperimentalPagerApi
 @Composable
-fun PokemonDetailLayout() {
+fun PokemonDetailLayout(pokemon: Pokemon) {
     val pagerState = rememberPagerState(pageCount = 4)
-    Column(
-        modifier = Modifier.fillMaxSize(),
+    LazyColumn (
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
+        stickyHeader{
+            HeaderDetail(pokemon)
+        }
+        items(1) {
+            BodyDetail(pokemon)
+        }
+    }
+
+}
+@Composable
+fun HeaderDetail(pokemon: Pokemon) {
+    Column(Modifier.fillMaxWidth()) {
         Row(
             Modifier
                 .width(IntrinsicSize.Max)
                 .padding(start = 12.dp, top = 12.dp)
         ) {
-            TitleH2Ligth("Charizard")
+            TitleH2Ligth(pokemon.name?: "")
         }
-        Row(
+        Box(
             Modifier
                 .align(Alignment.End)
                 .width(IntrinsicSize.Max)
                 .height(IntrinsicSize.Min)
                 .padding(end = 12.dp)
         ) {
-            SubtitleSmallLigth("#004")
+            val number = "#${pokemon.pokedexNumber?: ""}"
+            SubtitleSmallLigth(number, modifier = Modifier.align(Alignment.CenterEnd))
         }
-        Row(
-            Modifier
-                .width(IntrinsicSize.Max)
-                .padding(start = 6.dp)
-        ) {
-            ChipOutlined("Flying")
-            ChipOutlined("Fire")
-
+        LazyRow(modifier = Modifier.padding(start = 6.dp)) {
+            items(pokemon.types) { pokemon ->
+                ChipOutlined(pokemon.name?: "")
+            }
         }
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(12.dp))
-        PokemonImage()
-        TabsLayout(pagerState= pagerState)
-        TabsContent(pagerState = pagerState)
     }
 }
 
 @ExperimentalPagerApi
 @Composable
-fun TabsLayout(pagerState: PagerState){
+fun BodyDetail(pokemon: Pokemon) {
+    val pagerState = rememberPagerState(pageCount = 4)
+    Column {
+        PokemonImage(pokemon.imageUrl)
+        TabsButtons(pagerState= pagerState)
+        TabsLayout(pagerState = pagerState, pokemon)
+    }
+}
+
+@ExperimentalPagerApi
+@Composable
+fun TabsButtons(pagerState: PagerState){
     val scope = rememberCoroutineScope()
     val tabsNames = listOf(
         "About",
@@ -127,44 +150,36 @@ fun TabsLayout(pagerState: PagerState){
 
 @ExperimentalPagerApi
 @Composable
-fun TabsContent(pagerState: PagerState) {
+fun TabsLayout(pagerState: PagerState, pokemon: Pokemon) {
     HorizontalPager(state = pagerState) { page ->
         when (page){
-            0 -> TabAboutLayout() // TabAboutLayout()
-            1 -> TabBaseStatsLayout()
+            0 -> TabAboutLayout(pokemon) // TabAboutLayout()
+            1 -> TabBaseStatsLayout(pokemon)
             2 -> TabEvolutionLayout()
             3 -> TabMovesLayout()
         }
     }
 }
 @Composable
-fun PokemonImage() {
-    Box {
+fun PokemonImage(imageUrl: String?) {
+    Box(Modifier.fillMaxWidth()) {
         Spacer(
             modifier = Modifier
                 .align(alignment = Alignment.BottomCenter)
-                .clip(shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                .clip(shape = RoundedCornerShape(topStart = 25.dp, topEnd = 25.dp))
                 .background(Color.White)
                 .fillMaxWidth()
-                .height(48.dp)
+                .height(32.dp)
         )
-        Box(
-            Modifier
-                .fillMaxWidth()
-                .padding(bottom = 12.dp)) {
-            Box(Modifier.align(alignment = Alignment.BottomEnd)) {
-                Image(
-                    painter = painterResource(R.drawable.pokeball),"",
-                    colorFilter = ColorFilter.tint(color = Color.White),
-                    modifier = Modifier.alpha(0.5f)
-                )
-            }
-            Box(Modifier.align(alignment = Alignment.BottomCenter)) {
-                Image(
-                    painter = painterResource(R.drawable.ic_pk_charizard),"",
-                    modifier = Modifier.padding(top = 24.dp),
-                )
-            }
+        Box(Modifier.align(alignment = Alignment.BottomEnd)) {
+            Image(
+                painter = painterResource(R.drawable.pokeball),"",
+                colorFilter = ColorFilter.tint(color = Color.White),
+                modifier = Modifier.alpha(0.5f)
+            )
+        }
+        Box(Modifier.align(alignment = Alignment.BottomCenter)) {
+            GlideImage(imageModel = imageUrl, contentScale = ContentScale.Fit)
         }
     }
 }

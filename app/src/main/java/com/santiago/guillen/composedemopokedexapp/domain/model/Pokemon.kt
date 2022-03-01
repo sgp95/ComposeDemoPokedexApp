@@ -15,7 +15,10 @@ data class Pokemon (
     var abilities: ArrayList<Ability> = arrayListOf(),
     var genderRate: Int? = null,
     var eggGroup: ArrayList<EggGroup> = arrayListOf()
-)
+) {
+    fun getAbilities() = abilities.map { it.name }.joinToString(", ")
+    fun getEggGroup() = eggGroup.map { it.name }.joinToString(", ")
+}
 
 data class Type (
     var name: String? = null,

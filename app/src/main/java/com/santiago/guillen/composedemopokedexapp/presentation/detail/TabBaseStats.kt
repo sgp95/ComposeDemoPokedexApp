@@ -9,13 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.santiago.guillen.composedemopokedexapp.domain.model.Pokemon
 import com.santiago.guillen.composedemopokedexapp.ui.theme.SubtitleMediumDark
 import com.santiago.guillen.composedemopokedexapp.ui.theme.TextSmallDarkGray
 import com.santiago.guillen.composedemopokedexapp.ui.theme.TextSmallLigthGray
 
 @Composable
-fun TabBaseStatsLayout() {
-    val verticalSpace = 8.dp
+fun TabBaseStatsLayout(pokemon: Pokemon) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -24,24 +25,20 @@ fun TabBaseStatsLayout() {
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top,
     ) {
-        RowBaseStats("HP", "46", 0.46f)
-        Spacer(Modifier.height(verticalSpace))
-        RowBaseStats("Attack", "60", 0.8f, Color(0xFF4BC07A))
-        Spacer(Modifier.height(verticalSpace))
-        RowBaseStats("Defense", "48", 0.36f)
-        Spacer(Modifier.height(verticalSpace))
-        RowBaseStats("5p. Atk", "65", 0.71f, Color(0xFF4BC07A))
-        Spacer(Modifier.height(verticalSpace))
-        RowBaseStats("Speed", "65", 0.25f)
-        Spacer(Modifier.height(verticalSpace))
-        RowBaseStats("Total", "317", 0.85f, Color(0xFF4BC07A))
-        Spacer(Modifier.height(verticalSpace))
+        repeat(pokemon.stats.size) {
+            val color = if (it%2 == 0) { Color(0xFFFB6C6C) } else { Color(0xFF4BC07A) }
+            val stat = pokemon.stats[it]
+            val baseValue = (stat.baseValue?: 0).toFloat()
+            val percent: Float = baseValue/100f
+            RowBaseStats(stat.name?: "", stat.baseValue.toString(), percent, color)
+        }
         SubtitleMediumDark("Type Defenses", Modifier.padding(top = 24.dp))
         TextSmallLigthGray(
             "The effectiveness of each type on Charizard",
             textAlign = TextAlign.Justify,
             modifier = Modifier.padding(top = 4.dp)
         )
+        Spacer(Modifier.height(16.dp))
     }
 }
 
@@ -66,4 +63,5 @@ fun RowBaseStats(title: String, statValue: String, statNumber: Float, progressCo
             )
         }
     }
+    Spacer(Modifier.height(8.dp))
 }

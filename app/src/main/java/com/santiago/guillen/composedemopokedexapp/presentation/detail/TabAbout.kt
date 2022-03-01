@@ -11,13 +11,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.santiago.guillen.composedemopokedexapp.R
+import com.santiago.guillen.composedemopokedexapp.domain.model.Pokemon
 import com.santiago.guillen.composedemopokedexapp.ui.theme.SubtitleMediumDark
 import com.santiago.guillen.composedemopokedexapp.ui.theme.TextSmallDarkGray
 import com.santiago.guillen.composedemopokedexapp.ui.theme.TextSmallLigthGray
 
-
 @Composable
-fun TabAboutLayout() {
+fun TabAboutLayout(pokemon: Pokemon) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -27,15 +28,16 @@ fun TabAboutLayout() {
         verticalArrangement = Arrangement.Top,
     ) {
         RowAboutInformation("Species", "Seed")
-        RowAboutInformation("Height", "2'3.6'' (0.70 cm)")
-        RowAboutInformation("Weight", "15.2 lbs (6.9 kg)")
-        RowAboutInformation("Abilities", "Overgrow, Chiorophyl")
+        RowAboutInformation("Height", pokemon.height.toString())
+        RowAboutInformation("Weight",  pokemon.weight.toString())
+        RowAboutInformation("Abilities", pokemon.getAbilities())
         SubtitleMediumDark("Breeding", Modifier.padding(top = 12.dp))
         Spacer(Modifier.height(8.dp))
         GenderRow()
         Spacer(Modifier.height(8.dp))
-        RowAboutInformation("Egg Groups", "Monster")
+        RowAboutInformation("Egg Groups", pokemon.getEggGroup())
         RowAboutInformation("Egg Cycle", "Grass")
+        Spacer(Modifier.height(16.dp))
     }
 }
 
