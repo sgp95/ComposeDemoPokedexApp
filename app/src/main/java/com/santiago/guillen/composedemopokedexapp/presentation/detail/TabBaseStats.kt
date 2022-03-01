@@ -2,6 +2,8 @@ package com.santiago.guillen.composedemopokedexapp.presentation.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,9 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.santiago.guillen.composedemopokedexapp.domain.model.Pokemon
-import com.santiago.guillen.composedemopokedexapp.ui.theme.SubtitleMediumDark
-import com.santiago.guillen.composedemopokedexapp.ui.theme.TextSmallDarkGray
-import com.santiago.guillen.composedemopokedexapp.ui.theme.TextSmallLigthGray
+import com.santiago.guillen.composedemopokedexapp.domain.model.Type
+import com.santiago.guillen.composedemopokedexapp.ui.theme.*
+import kotlin.math.min
 
 @Composable
 fun TabBaseStatsLayout(pokemon: Pokemon) {
@@ -20,7 +22,7 @@ fun TabBaseStatsLayout(pokemon: Pokemon) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(start = 24.dp, end = 24.dp),
+            .padding(top = 12.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top,
     ) {
@@ -29,20 +31,35 @@ fun TabBaseStatsLayout(pokemon: Pokemon) {
             val stat = pokemon.stats[it]
             val baseValue = (stat.baseValue?: 0).toFloat()
             val percent: Float = baseValue/100f
-            RowBaseStats(stat.name?: "", stat.baseValue.toString(), percent, color)
+            RowBaseStats(stat.name?: "", stat.baseValue.toString(), min(1f, percent), color)
         }
-        SubtitleMediumDark("Type Defenses", Modifier.padding(top = 24.dp))
+        SubtitleMediumDark("Type Defenses", Modifier.padding(start = 24.dp, end = 24.dp, top = 24.dp))
         TextSmallLigthGray(
             "The effectiveness of each type on ${pokemon.name}",
             textAlign = TextAlign.Justify,
-            modifier = Modifier.padding(top = 4.dp)
+            modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 4.dp)
         )
+        ChipGroup(pokemon.types)
+    }
+}
+
+@Composable
+fun ChipGroup(types: List<Type>) {
+    Column (Modifier.padding(start = 12.dp, bottom = 24.dp, top = 12.dp)) {
+        LazyRow {
+            items(types) { type ->
+                ChipOutlined(
+                    name = type.name?: "",
+                    color = colorByType(type.name?: "")
+                )
+            }
+        }
     }
 }
 
 @Composable
 fun RowBaseStats(title: String, statValue: String, statNumber: Float, progressColor: Color = Color(0xFFFB6C6C)) {
-    Row {
+    Row (Modifier.padding(start = 24.dp, end = 24.dp)) {
         TextSmallLigthGray(
             title,
             Modifier.weight(3f),
@@ -56,7 +73,9 @@ fun RowBaseStats(title: String, statValue: String, statNumber: Float, progressCo
             )
             LinearProgressIndicator(
                 progress = statNumber,
-                modifier = Modifier.weight(6f).align(Alignment.CenterVertically),
+                modifier = Modifier
+                    .weight(6f)
+                    .align(Alignment.CenterVertically),
                 color = progressColor
             )
         }

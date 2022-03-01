@@ -172,13 +172,14 @@ fun ChipOutlined(
     isSelected: Boolean = false,
     onSelectionChanged: (String) -> Unit = {},
     fontSize: TextUnit = 14.sp,
+    color: Color = Color.White.copy(alpha = 0.15f)
 ) {
     Surface(
         modifier = Modifier.padding(start = 6.dp),
         elevation = 0.dp,
         shape = RoundedCornerShape(16.dp),
         border= BorderStroke(1.dp, Color.White),
-        color = if (isSelected) Color.Black.copy(alpha = 0.4f) else Color.White.copy(alpha = 0.15f)
+        color = if (isSelected) Color.Black.copy(alpha = 0.4f) else color
     ) {
         Row(modifier = Modifier
             .toggleable(

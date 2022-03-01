@@ -28,8 +28,8 @@ import com.google.accompanist.pager.*
 import com.santiago.guillen.composedemopokedexapp.R
 import com.santiago.guillen.composedemopokedexapp.domain.model.Pokemon
 import com.santiago.guillen.composedemopokedexapp.ui.theme.*
-import kotlinx.coroutines.launch
 import com.skydoves.landscapist.glide.GlideImage
+import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
 @Preview(showBackground = true)
@@ -49,14 +49,6 @@ fun ViewPreview() {
 @Composable
 fun PokemonDetailLayout(pokemon: Pokemon) {
     val pagerState = rememberPagerState(pageCount = 4)
-    /*
-    val pagerState = rememberPagerState(pageCount = 4)
-    Column {
-        PokemonImage(pokemon.imageUrl)
-        TabsButtons(pagerState= pagerState)
-        TabsLayout(pagerState = pagerState, pokemon)
-    }
-    * */
     LazyColumn (
         modifier = Modifier.fillMaxSize(),
     ) {
