@@ -63,7 +63,7 @@ fun HeaderDetail(pokemon: Pokemon) {
         Row(
             Modifier
                 .width(IntrinsicSize.Max)
-                .padding(start = 12.dp, top = 12.dp)
+                .padding(start = 24.dp, top = 24.dp)
         ) {
             TitleH2Ligth(pokemon.name?: "")
         }
@@ -72,15 +72,15 @@ fun HeaderDetail(pokemon: Pokemon) {
                 .align(Alignment.End)
                 .width(IntrinsicSize.Max)
                 .height(IntrinsicSize.Min)
-                .padding(end = 12.dp)
+                .padding(end = 24.dp)
         ) {
             val number = "#${pokemon.pokedexNumber?: ""}"
             SubtitleSmallLigth(number, modifier = Modifier.align(Alignment.CenterEnd))
         }
         ChipVerticalGrid(
-            spacing = 1.dp,
+            spacing = 0.dp,
             modifier = Modifier
-                .padding(7.dp)
+                .padding(start = 18.dp)
         ) {
             pokemon.types.forEach { word ->
                 ChipOutlined(name = word.name?: "")

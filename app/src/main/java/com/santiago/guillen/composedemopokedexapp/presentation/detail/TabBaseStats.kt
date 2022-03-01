@@ -37,9 +37,9 @@ fun TabBaseStatsLayout(pokemon: Pokemon) {
             modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 4.dp)
         )
         ChipVerticalGrid(
-            spacing = 2.dp,
+            spacing = 0.dp,
             modifier = Modifier
-                .padding(7.dp)
+                .padding(18.dp)
         ) {
             pokemon.types.forEach { word ->
                 ChipOutlined(

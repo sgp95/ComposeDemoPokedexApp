@@ -125,7 +125,7 @@ fun TextSmallLigthGray(
             fontFamily = fontsPoppins,
             fontWeight = FontWeight.SemiBold,
             fontSize = 14.sp,
-            color = Color.LightGray
+            color = Color(0XFF7A7879)
         ),
         textAlign = textAlign
     )
@@ -136,13 +136,14 @@ fun TextSmallDarkGray(
     text: String,
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.Start,
+    fontWeight: FontWeight = FontWeight.SemiBold,
 ) {
     Text(
         text = text,
         modifier = modifier,
         style = TextStyle(
             fontFamily = fontsPoppins,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = fontWeight,
             fontSize = 14.sp,
             color = Color.DarkGray
         ),
