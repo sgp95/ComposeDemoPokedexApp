@@ -16,12 +16,11 @@ import com.santiago.guillen.composedemopokedexapp.ui.theme.TextSmallLigthGray
 
 @Composable
 fun TabBaseStatsLayout(pokemon: Pokemon) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(top = 12.dp, start = 12.dp, end = 12.dp),
+            .padding(start = 24.dp, end = 24.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top,
     ) {
@@ -34,11 +33,10 @@ fun TabBaseStatsLayout(pokemon: Pokemon) {
         }
         SubtitleMediumDark("Type Defenses", Modifier.padding(top = 24.dp))
         TextSmallLigthGray(
-            "The effectiveness of each type on Charizard",
+            "The effectiveness of each type on ${pokemon.name}",
             textAlign = TextAlign.Justify,
             modifier = Modifier.padding(top = 4.dp)
         )
-        Spacer(Modifier.height(16.dp))
     }
 }
 

@@ -49,16 +49,21 @@ fun ViewPreview() {
 @Composable
 fun PokemonDetailLayout(pokemon: Pokemon) {
     val pagerState = rememberPagerState(pageCount = 4)
+    /*
+    val pagerState = rememberPagerState(pageCount = 4)
+    Column {
+        PokemonImage(pokemon.imageUrl)
+        TabsButtons(pagerState= pagerState)
+        TabsLayout(pagerState = pagerState, pokemon)
+    }
+    * */
     LazyColumn (
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
     ) {
-        stickyHeader{
-            HeaderDetail(pokemon)
-        }
-        items(1) {
-            BodyDetail(pokemon)
-        }
+        stickyHeader { HeaderDetail(pokemon) }
+        item { PokemonImage(pokemon.imageUrl) }
+        item { TabsButtons(pagerState= pagerState) }
+        item { TabsLayout(pagerState = pagerState, pokemon) }
     }
 
 }
@@ -87,17 +92,6 @@ fun HeaderDetail(pokemon: Pokemon) {
                 ChipOutlined(pokemon.name?: "")
             }
         }
-    }
-}
-
-@ExperimentalPagerApi
-@Composable
-fun BodyDetail(pokemon: Pokemon) {
-    val pagerState = rememberPagerState(pageCount = 4)
-    Column {
-        PokemonImage(pokemon.imageUrl)
-        TabsButtons(pagerState= pagerState)
-        TabsLayout(pagerState = pagerState, pokemon)
     }
 }
 
@@ -151,7 +145,7 @@ fun TabsButtons(pagerState: PagerState){
 @ExperimentalPagerApi
 @Composable
 fun TabsLayout(pagerState: PagerState, pokemon: Pokemon) {
-    HorizontalPager(state = pagerState) { page ->
+    HorizontalPager(state = pagerState, Modifier.background(Color.White)) { page ->
         when (page){
             0 -> TabAboutLayout(pokemon) // TabAboutLayout()
             1 -> TabBaseStatsLayout(pokemon)

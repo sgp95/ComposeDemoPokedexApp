@@ -18,26 +18,33 @@ import com.santiago.guillen.composedemopokedexapp.ui.theme.TextSmallLigthGray
 
 @Composable
 fun TabAboutLayout(pokemon: Pokemon) {
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .padding(top = 12.dp, start = 12.dp, end = 12.dp),
-        horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.Top,
-    ) {
-        RowAboutInformation("Species", "Seed")
-        RowAboutInformation("Height", pokemon.height.toString())
-        RowAboutInformation("Weight",  pokemon.weight.toString())
-        RowAboutInformation("Abilities", pokemon.getAbilities())
-        SubtitleMediumDark("Breeding", Modifier.padding(top = 12.dp))
-        Spacer(Modifier.height(8.dp))
-        GenderRow()
-        Spacer(Modifier.height(8.dp))
-        RowAboutInformation("Egg Groups", pokemon.getEggGroup())
-        RowAboutInformation("Egg Cycle", "Grass")
-        Spacer(Modifier.height(16.dp))
+    BoxWithConstraints {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(top = 12.dp, start = 24.dp, end = 24.dp),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.Top,
+        ) {
+            Row(Modifier.fillMaxWidth()) {
+                TextSmallDarkGray(
+                    (pokemon.description ?: "").replace("\n", " "),
+                    Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Justify
+                )
+            }
+            Spacer(Modifier.height(12.dp))
+            RowAboutInformation("Height", pokemon.height.toString())
+            RowAboutInformation("Weight", pokemon.weight.toString())
+            RowAboutInformation("Abilities", pokemon.getAbilities())
+            SubtitleMediumDark("Breeding", Modifier.padding(top = 12.dp))
+            Spacer(Modifier.height(8.dp))
+            GenderRow()
+            Spacer(Modifier.height(8.dp))
+            RowAboutInformation("Egg Groups", pokemon.getEggGroup())
+            //Spacer(Modifier.height(16.dp))
+        }
     }
 }
 
