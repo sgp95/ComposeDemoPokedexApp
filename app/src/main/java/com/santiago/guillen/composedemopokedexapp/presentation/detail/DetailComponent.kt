@@ -5,8 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Tab
@@ -79,9 +77,13 @@ fun HeaderDetail(pokemon: Pokemon) {
             val number = "#${pokemon.pokedexNumber?: ""}"
             SubtitleSmallLigth(number, modifier = Modifier.align(Alignment.CenterEnd))
         }
-        LazyRow(modifier = Modifier.padding(start = 6.dp)) {
-            items(pokemon.types) { pokemon ->
-                ChipOutlined(pokemon.name?: "")
+        ChipVerticalGrid(
+            spacing = 1.dp,
+            modifier = Modifier
+                .padding(7.dp)
+        ) {
+            pokemon.types.forEach { word ->
+                ChipOutlined(name = word.name?: "")
             }
         }
     }

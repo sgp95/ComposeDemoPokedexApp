@@ -13,12 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 
 /**
  * This file will contain all the components/widgets shared between the screens.
@@ -222,6 +221,44 @@ fun ProgressBar(isLoading: Boolean = false) {
                 }
             else
                 Unit
+        }
+    }
+}
+
+@Composable
+fun ChipVerticalGrid(
+    modifier: Modifier = Modifier,
+    spacing: Dp,
+    content: @Composable () -> Unit
+) {
+    Layout(
+        content = content,
+        modifier = modifier
+    ) { measurables, constraints ->
+        var currentRow = 0
+        var currentOrigin = IntOffset.Zero
+        val spacingValue = spacing.toPx().toInt()
+        val placeables = measurables.map { measurable ->
+            val placeable = measurable.measure(constraints)
+
+            if (currentOrigin.x > 0f && currentOrigin.x + placeable.width > constraints.maxWidth) {
+                currentRow += 1
+                currentOrigin = currentOrigin.copy(x = 0, y = currentOrigin.y + placeable.height + spacingValue)
+            }
+
+            placeable to currentOrigin.also {
+                currentOrigin = it.copy(x = it.x + placeable.width + spacingValue)
+            }
+        }
+
+        layout(
+            width = constraints.maxWidth,
+            height = placeables.lastOrNull()?.run { first.height + second.y } ?: 0
+        ) {
+            placeables.forEach {
+                val (placeable, origin) = it
+                placeable.place(origin.x, origin.y)
+            }
         }
     }
 }
