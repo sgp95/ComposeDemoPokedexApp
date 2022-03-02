@@ -2,19 +2,18 @@ package com.santiago.guillen.composedemopokedexapp.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.santiago.guillen.composedemopokedexapp.domain.model.Pokemon
-import com.santiago.guillen.composedemopokedexapp.domain.model.Type
 import com.santiago.guillen.composedemopokedexapp.presentation.detail.DetailActivity
-import com.santiago.guillen.composedemopokedexapp.ui.theme.ComposeDemoPokedexAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalFoundationApi
 @ExperimentalPagerApi
 @AndroidEntryPoint
 class HomeActivity: ComponentActivity() {
@@ -22,19 +21,23 @@ class HomeActivity: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getEntries()
         setContent {
-            HomeScreen() { onPokemonClicked(it) }
+            HomeScreen(
+                viewModel = viewModel,
+                onPokemonClicked = {onPokemonClicked(it)}
+            )
         }
 
-        viewModel.pokedexEntries.observe(this) {
-            setContent {
-                HomeScreen(it) { onPokemonClicked(it) }
-            }
-        }
-
-        viewModel.pokemon.observe(this) {
-        }
+//        viewModel.pokedexEntries.observe(this) {
+//            setContent {
+//                HomeScreen(
+//                    entries = it,
+//                    onLoadMore = { onLoadMore() },
+//                    onPokemonClicked = {onPokemonClicked(it)}
+//                )
+//            }
+//        }
+//        viewModel.getEntries()
     }
 
     @ExperimentalPagerApi
@@ -43,6 +46,10 @@ class HomeActivity: ComponentActivity() {
             putExtra(DetailActivity.EXTRA_POKEMON_ID, pokemon.id!!)
         })
     }
+
+//    private fun onLoadMore() {
+//        viewModel.getEntries()
+//    }
 }
 
 @Preview(showBackground = true)

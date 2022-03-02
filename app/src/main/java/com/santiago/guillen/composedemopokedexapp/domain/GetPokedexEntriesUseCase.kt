@@ -1,5 +1,6 @@
 package com.santiago.guillen.composedemopokedexapp.domain
 
+import com.santiago.guillen.composedemopokedexapp.Constants
 import com.santiago.guillen.composedemopokedexapp.data.datasource.api.response.PokemonResponse
 import com.santiago.guillen.composedemopokedexapp.data.datasource.api.response.PokemonSpecieResponse
 import com.santiago.guillen.composedemopokedexapp.data.repository.PokedexRepository
@@ -9,7 +10,7 @@ import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 class GetPokedexEntriesUseCase @Inject constructor(private val repository: PokedexRepository) {
-    suspend fun execute(limit: Int = 20, offset: Int)  =
+    suspend fun execute(limit: Int = Constants.PAGE_SIZE, offset: Int)  =
         coroutineScope {
             val pokemonList = arrayListOf<Pokemon>()
             val pokemonEntries = async { repository.getPokedexEntries(limit, offset) }

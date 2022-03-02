@@ -1,6 +1,7 @@
 package com.santiago.guillen.composedemopokedexapp.data.datasource.api
 
 import com.google.gson.GsonBuilder
+import com.santiago.guillen.composedemopokedexapp.Constants
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -37,7 +38,7 @@ class ApiManager {
         val client = getOkHttpClient()
 
         return Retrofit.Builder()
-            .baseUrl("https://pokeapi.co/api/v2/")
+            .baseUrl(Constants.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
