@@ -1,7 +1,6 @@
 package com.santiago.guillen.composedemopokedexapp.presentation.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.santiago.guillen.composedemopokedexapp.Constants
@@ -19,21 +18,24 @@ class HomeViewModel @Inject constructor(
 
     private var currentPage = 0
 
-    private val _pokedexEntries = MutableLiveData<List<Pokemon>>()
-    val pokedexEntries: LiveData<List<Pokemon>> = _pokedexEntries
+    var pokemonList = mutableStateOf<List<Pokemon>>(listOf())
+    var isLoading = mutableStateOf(false)
+    var endReached = mutableStateOf(false)
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
+    init {
+        getEntries()
+    }
 
     fun getEntries() {
-        _isLoading.value = false
+        isLoading.value = true
         viewModelScope.launch {
             val entries = getPokedexEntriesUseCase.execute(offset = currentPage * Constants.PAGE_SIZE).toList()
             savePokemonEntries(entries)
             if(entries.isNotEmpty()) {
+                endReached.value = entries.size < Constants.PAGE_SIZE
                 currentPage += 1
-                _isLoading.value = true
-                _pokedexEntries.value = entries
+                isLoading.value = false
+                pokemonList.value += entries
             }
         }
     }

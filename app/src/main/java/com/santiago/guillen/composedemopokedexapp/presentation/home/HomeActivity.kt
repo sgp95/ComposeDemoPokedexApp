@@ -23,21 +23,21 @@ class HomeActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HomeScreen(
-                onLoadMore = { onLoadMore() },
+                viewModel = viewModel,
                 onPokemonClicked = {onPokemonClicked(it)}
             )
         }
 
-        viewModel.pokedexEntries.observe(this) {
-            setContent {
-                HomeScreen(
-                    entries = it,
-                    onLoadMore = { onLoadMore() },
-                    onPokemonClicked = {onPokemonClicked(it)}
-                )
-            }
-        }
-        viewModel.getEntries()
+//        viewModel.pokedexEntries.observe(this) {
+//            setContent {
+//                HomeScreen(
+//                    entries = it,
+//                    onLoadMore = { onLoadMore() },
+//                    onPokemonClicked = {onPokemonClicked(it)}
+//                )
+//            }
+//        }
+//        viewModel.getEntries()
     }
 
     @ExperimentalPagerApi
@@ -47,9 +47,9 @@ class HomeActivity: ComponentActivity() {
         })
     }
 
-    private fun onLoadMore() {
-        viewModel.getEntries()
-    }
+//    private fun onLoadMore() {
+//        viewModel.getEntries()
+//    }
 }
 
 @Preview(showBackground = true)

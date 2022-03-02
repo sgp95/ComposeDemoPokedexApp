@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -208,21 +209,13 @@ fun ChipOutlined(
  * Loader
  */
 @Composable
-fun ProgressBar(isLoading: Boolean = false) {
-    ComposeDemoPokedexAppTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            val show = remember { mutableStateOf(false) }
-            show.value = isLoading
-            if(show.value)
-                Box(contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.height(80.dp).width(80.dp)
-                    )
-                }
-            else
-                Unit
-        }
+fun ProgressBar() {
+    Box(contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()) {
+        CircularProgressIndicator(
+            modifier = Modifier.height(80.dp).width(80.dp),
+            color = MaterialTheme.colors.primary
+        )
     }
 }
 
