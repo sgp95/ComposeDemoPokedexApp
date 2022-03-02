@@ -36,7 +36,7 @@ fun HomeScreen(viewModel: HomeViewModel, onPokemonClicked: (pokemon: Pokemon) ->
             Column(
                 modifier = Modifier.fillMaxSize(),
             ) {
-                TitleH2Dark("Pokedex", modifier = Modifier.padding(start = 10.dp, top = 4.dp))
+                TitleH2Dark("Pokedex", modifier = Modifier.padding(start = 12.dp, top = 24.dp))
                 GridList(viewModel, entries, isLoading, endReach, onPokemonClicked)
             }
             if(isLoading) {
