@@ -21,19 +21,23 @@ class HomeActivity: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getEntries()
         setContent {
-            HomeScreen() { onPokemonClicked(it) }
+            HomeScreen(
+                onLoadMore = { onLoadMore() },
+                onPokemonClicked = {onPokemonClicked(it)}
+            )
         }
 
         viewModel.pokedexEntries.observe(this) {
             setContent {
-                HomeScreen(it) { onPokemonClicked(it) }
+                HomeScreen(
+                    entries = it,
+                    onLoadMore = { onLoadMore() },
+                    onPokemonClicked = {onPokemonClicked(it)}
+                )
             }
         }
-
-        viewModel.pokemon.observe(this) {
-        }
+        viewModel.getEntries()
     }
 
     @ExperimentalPagerApi
@@ -41,6 +45,10 @@ class HomeActivity: ComponentActivity() {
         startActivity(Intent(this, DetailActivity::class.java).apply {
             putExtra(DetailActivity.EXTRA_POKEMON_ID, pokemon.id!!)
         })
+    }
+
+    private fun onLoadMore() {
+        viewModel.getEntries()
     }
 }
 

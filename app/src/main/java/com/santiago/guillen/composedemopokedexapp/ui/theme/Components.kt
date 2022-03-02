@@ -106,7 +106,7 @@ fun SubtitleMediumLight(
         style = TextStyle(
             fontFamily = fontsPoppins,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 16.sp,
+            fontSize = 15.sp,
             color = color
         ),
     )
